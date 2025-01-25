@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { Menu, ShoppingBag } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -14,9 +14,9 @@ import {
 
 const Navbar = () => {
   return (
-    <div>
-      <section className="py-4">
-        <div className="container">
+    <div className="">
+      <section className="container py-6 mx-auto">
+        <div className="w-full px-6">
           <nav className="justify-between hidden lg:flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ const Navbar = () => {
                   )}
                   href="#"
                 >
-                  Home
+                  HOME
                 </a>
 
                 <a
@@ -51,7 +51,7 @@ const Navbar = () => {
                   )}
                   href="#"
                 >
-                  Pricing
+                  PRODUCTS
                 </a>
                 <a
                   className={cn(
@@ -63,26 +63,32 @@ const Navbar = () => {
                   )}
                   href="#"
                 >
-                  Blog
+                  ABOUT
                 </a>
               </div>
             </div>
-            <div className="flex gap-2">
+
+            <div className="flex items-center gap-2">
               <Button variant="outline" size="sm">
                 Log in
               </Button>
-              <Button size="sm">Sign up</Button>
+              <ShoppingBag className="w-6 h-6 text-gray-700" />
             </div>
           </nav>
+
+          {/* mobile view */}
           <div className="block lg:hidden">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  className="w-8"
-                  alt="logo"
-                />
-                <span className="text-lg font-semibold">Bicycle Store</span>
+              <div className="flex items-center justify-between w-full pr-4">
+                <div className="flex items-center">
+                  <img
+                    src="https://shadcnblocks.com/images/block/block-1.svg"
+                    className="w-8"
+                    alt="logo"
+                  />
+                  <span className="text-lg font-semibold">Bicycle Store</span>
+                </div>
+                <ShoppingBag className="w-6 h-6 text-gray-700" />
               </div>
               <Sheet>
                 <SheetTrigger asChild>
@@ -120,7 +126,6 @@ const Navbar = () => {
 
                   <div className="flex flex-col gap-3">
                     <Button variant="outline">Log in</Button>
-                    <Button>Sign up</Button>
                   </div>
                 </SheetContent>
               </Sheet>

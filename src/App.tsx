@@ -1,9 +1,17 @@
 import "./App.css";
+import Banner from "./components/Shared/Banner";
+import ProductSec from "./components/Shared/ProductSec";
+import SingleProductPage from "./components/Shared/SingleProductPage";
 
 function App() {
   return (
-    <div>
-      <h1>this is home</h1>
+    <div className="">
+      <div className="h-screen">
+        <Banner />
+      </div>
+
+      <ProductSec />
+      <SingleProductPage />
     </div>
   );
 }
