@@ -1,13 +1,24 @@
 import { Link } from "react-router-dom";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const ProductCard = ({ product }) => {
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // const handleNavigation = () => {
-  //   navigate(`/product/${product.id}`);
-  // };
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        stock: product.stock,
+        imageUrl: product.imageUrl as string,
+      })
+    );
+  };
 
   return (
     <div className="h-full max-w-sm mt-8 overflow-hidden rounded-lg">
@@ -26,20 +37,22 @@ const ProductCard = ({ product }) => {
             Badge
           </Badge>
         </div>
-
-        <div className="flex items-end justify-between pt-4">
-          <div>
-            <h3 className="text-xl">{product.name}</h3>
-
-            <p className="mt-2 text-gray-600">
-              <span className="text-base">${product.price}</span>
-            </p>
-          </div>
-
-          {/* <Button className="w-2/6">Add to Cart</Button> */}
-        </div>
-        <Button className="w-2/6 mt-2">Add to Cart</Button>
       </Link>
+
+      <div className="flex items-end justify-between pt-4">
+        <div>
+          <h3 className="text-xl">{product.name}</h3>
+
+          <p className="mt-2 text-gray-600">
+            <span className="text-base">${product.price}</span>
+          </p>
+        </div>
+
+        {/* <Button className="w-2/6">Add to Cart</Button> */}
+      </div>
+      <Button className="w-2/6 mt-2" onClick={handleAddToCart}>
+        Add to Cart
+      </Button>
     </div>
   );
 };

@@ -15,15 +15,23 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSelector } from "react-redux";
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { totalQuantity, totalPrice } = useSelector((state: any) => state.cart);
+
   return (
-    <div className="">
+    <div className="sticky top-0 z-50 bg-white shadow-md">
       <section className="container py-6 mx-auto">
         <div className="w-full px-6">
           <nav className="justify-between hidden lg:flex">
@@ -80,14 +88,37 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
               <div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <User className="w-6 h-6 rounded-full bg-zinc-800" />
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative w-8 h-8 rounded-full"
+                    >
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage src="/avatars/01.png" alt="@shadcn" />
+                        <AvatarFallback>SC</AvatarFallback>
+                      </Avatar>
+                    </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Email</DropdownMenuLabel>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          shadcn
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          m@example.com
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                      <DropdownMenuItem>Billing</DropdownMenuItem>
+                      <DropdownMenuItem>Settings</DropdownMenuItem>
+                      <DropdownMenuItem>New Team</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Log out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -97,7 +128,21 @@ const Navbar = () => {
                 </Button>
               </div>
 
-              <ShoppingBag className="w-6 h-6 text-gray-700" />
+              {/* Cart Icon with Badge */}
+              <div className="relative flex items-center">
+                <Link to="/cart">
+                  <ShoppingBag className="w-6 h-6 text-gray-700" />
+
+                  {totalQuantity > 0 && (
+                    <span className="absolute -top-2 -right-3 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full font-number">
+                      {totalQuantity}
+                    </span>
+                  )}
+                </Link>
+              </div>
+              <span className="ml-4 text-lg font-semibold text-gray-700 font-number">
+                ${totalPrice.toFixed(2)}
+              </span>
             </div>
           </nav>
 
