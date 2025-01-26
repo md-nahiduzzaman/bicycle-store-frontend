@@ -1,4 +1,4 @@
-import { Menu, ShoppingBag } from "lucide-react";
+import { Menu, ShoppingBag, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   return (
@@ -69,9 +78,25 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                Log in
-              </Button>
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <User className="w-6 h-6 rounded-full bg-zinc-800" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>Email</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div>
+                <Button variant="outline" size="sm">
+                  Log in
+                </Button>
+              </div>
+
               <ShoppingBag className="w-6 h-6 text-gray-700" />
             </div>
           </nav>

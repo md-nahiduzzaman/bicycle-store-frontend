@@ -1,17 +1,37 @@
 import "./App.css";
 import Banner from "./components/Shared/Banner";
-import ProductSec from "./components/Shared/ProductSec";
-import SingleProductPage from "./components/Shared/SingleProductPage";
+import ProductCard from "./components/Shared/ProductCard";
+
+import { useGetProductsQuery } from "./redux/features/product/product";
 
 function App() {
+  const { isLoading, data, error } = useGetProductsQuery();
+  console.log(data);
+
   return (
-    <div className="">
+    <div>
       <div className="h-screen">
         <Banner />
       </div>
 
-      <ProductSec />
-      <SingleProductPage />
+      {/* Product Section */}
+      <div className="container px-6 py-10 mx-auto">
+        <h1 className="text-5xl font-semibold">Microphone & Accessories</h1>
+        <hr className="mt-8 mb-4 border-gray-300" />
+
+        {/* Loading State */}
+        {isLoading && <p>Loading products...</p>}
+
+        {/* Error State */}
+        {error && <p className="text-red-500">Failed to load products.</p>}
+
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {data?.data?.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
