@@ -19,16 +19,20 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSelector } from "react-redux";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const { totalQuantity, totalPrice } = useSelector((state: any) => state.cart);
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector(selectCurrentUser);
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md">
@@ -86,47 +90,58 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative w-8 h-8 rounded-full"
+              {user ? (
+                <div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="relative w-8 h-8 rounded-full"
+                      >
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage src="/avatars/01.png" alt="@shadcn" />
+                          <AvatarFallback>SC</AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56"
+                      align="end"
+                      forceMount
                     >
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                        <AvatarFallback>SC</AvatarFallback>
-                      </Avatar>
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            shadcn
+                          </p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            m@example.com
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuItem>New Team</DropdownMenuItem>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => dispatch(logout())}>
+                        Log out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              ) : (
+                <div>
+                  <NavLink to="/login">
+                    <Button variant="outline" size="sm">
+                      Log in
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          shadcn
-                        </p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          m@example.com
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
-                      <DropdownMenuItem>Billing</DropdownMenuItem>
-                      <DropdownMenuItem>Settings</DropdownMenuItem>
-                      <DropdownMenuItem>New Team</DropdownMenuItem>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Log out</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <div>
-                <Button variant="outline" size="sm">
-                  Log in
-                </Button>
-              </div>
+                  </NavLink>
+                </div>
+              )}
 
               {/* Cart Icon with Badge */}
               <div className="relative flex items-center">
