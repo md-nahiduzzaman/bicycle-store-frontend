@@ -1,4 +1,3 @@
-import { getPriority } from "os";
 import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({

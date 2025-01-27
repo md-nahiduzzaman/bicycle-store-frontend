@@ -3,9 +3,12 @@ import Banner from "./components/Shared/Banner";
 import ProductCard from "./components/Shared/ProductCard";
 
 import { useGetProductsQuery } from "./redux/features/product/product";
+import { TProduct } from "./types";
 
 function App() {
-  const { isLoading, data, error } = useGetProductsQuery();
+  const { isLoading, data, error } = useGetProductsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   console.log(data);
 
   return (
@@ -27,7 +30,7 @@ function App() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data?.data?.map((product) => (
+          {data?.data?.map((product: TProduct) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>

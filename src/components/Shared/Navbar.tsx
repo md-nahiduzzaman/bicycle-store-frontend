@@ -1,4 +1,4 @@
-import { Menu, ShoppingBag, User } from "lucide-react";
+import { Menu, ShoppingBag } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 

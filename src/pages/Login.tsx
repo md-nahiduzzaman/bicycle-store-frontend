@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+// import jwtDecode from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
 
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
 
 import { useLoginMutation } from "@/redux/features/auth/auth";
 import { toast } from "sonner";
@@ -30,14 +30,19 @@ const formSchema = z.object({
   password: z.string().min(5),
 });
 
+interface TUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.pathname || "/";
-
-  console.log({ location });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,28 +62,27 @@ const Login = () => {
   const toastId = "login";
 
   useEffect(() => {
-    const toastId = "login";
     if (isLoading) {
       toast.loading("Processing ...", { id: toastId });
     }
 
     if (isSuccess) {
-      const token = data?.data?.token; // Ensure you access the token correctly
+      const token = data?.data?.token;
       console.log("Received Token:", token);
 
       if (token) {
         try {
-          const user = jwtDecode<TUser>(token); // Type-check the decoded token
+          const user = jwtDecode<TUser>(token);
           console.log("Decoded User:", user);
 
-          dispatch(setUser({ user, token })); // Save user and token in Redux
+          dispatch(setUser({ user, token }));
           toast.success(data?.message || "Login successful!", { id: toastId });
 
           setTimeout(() => {
             navigate(from, { state: location.state?.state, replace: true });
           }, 1000);
         } catch (error) {
-          console.error("JWT Decode Error:", error); // Log decoding errors
+          console.error("JWT Decode Error:", error);
           toast.error("Failed to decode token.", { id: toastId });
         }
       } else {
@@ -87,8 +91,7 @@ const Login = () => {
     }
 
     if (isError) {
-      console.error("Login Error:", error);
-      toast.error(error?.data?.message || "Login failed.", { id: toastId });
+      toast.error("Login failed.", { id: toastId });
     }
   }, [
     data,
@@ -118,7 +121,6 @@ const Login = () => {
               <p className="mb-2 text-2xl font-bold font-heading">Spinzo</p>
               <p className="text-muted-foreground">Please login.</p>
             </div>
-            {/* from here */}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}

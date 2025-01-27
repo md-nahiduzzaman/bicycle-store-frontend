@@ -40,8 +40,6 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.pathname || "/";
-
   console.log({ location });
 
   const form = useForm<z.infer<typeof formSchema>>({

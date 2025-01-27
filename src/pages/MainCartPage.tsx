@@ -5,6 +5,15 @@ import {
 } from "@/redux/features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDeleteOutline } from "react-icons/md";
+import { RootState } from "@/redux/store";
+
+type CartItem = {
+  product: string;
+  name: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+};
 
 const MainCartPage = () => {
   const dispatch = useDispatch();
@@ -27,12 +36,12 @@ const MainCartPage = () => {
         {items.length > 0 ? (
           <>
             <ul className="space-y-4">
-              {items.map((item) => (
+              {items.map((item: CartItem) => (
                 <li key={item.product} className="flex items-center gap-4">
                   <img
                     src={
                       item.imageUrl ||
-                      "https://img.freepik.com/free-photo/cool-bicycle-studio_23-2150884204.jpg?t=st=1737894564~exp=1737898164~hmac=db9c2c50023a1e3f068366e6d27de34ae66a81f4cf39373674395922d397fdff&w=740"
+                      "https://img.freepik.com/free-photo/cool-bicycle-studio_23-2150884204.jpg"
                     }
                     alt={item.name}
                     className="object-cover w-16 h-16 rounded"

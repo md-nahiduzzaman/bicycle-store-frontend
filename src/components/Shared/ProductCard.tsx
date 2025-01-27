@@ -3,8 +3,13 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { TProduct } from "@/types";
 
-const ProductCard = ({ product }) => {
+interface ProductCardProps {
+  product: TProduct;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
@@ -14,8 +19,8 @@ const ProductCard = ({ product }) => {
         name: product.name,
         price: product.price,
         quantity: 1,
-        stock: product.stock,
-        imageUrl: product.imageUrl as string,
+        stock: product.quantity,
+        imageUrl: product.imageUrl || "",
       })
     );
   };
@@ -26,7 +31,7 @@ const ProductCard = ({ product }) => {
         <div className="relative group">
           <img
             src={
-              product.image ||
+              product.imageUrl ||
               "https://motto-spin.myshopify.com/cdn/shop/files/1_3d7043df-69aa-4cce-ac02-eb9d90301e66.jpg?v=1730455869&width=750"
             }
             alt={product.name}
