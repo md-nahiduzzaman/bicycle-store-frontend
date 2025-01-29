@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "sonner";
 
 export interface ICartItem {
   product: string; //id
@@ -61,11 +62,22 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.product === id);
 
       if (existingItem && quantity > 0) {
+        if (quantity > existingItem.stock) {
+          toast.error("Not enough stock!");
+          return;
+        }
+
         const quantityDifference = quantity - existingItem.quantity;
         existingItem.quantity = quantity;
 
+        // state.totalQuantity += quantityDifference;
+        // state.totalPrice += existingItem.price * quantityDifference;
+
         state.totalQuantity += quantityDifference;
-        state.totalPrice += existingItem.price * quantityDifference;
+        state.totalPrice = state.items.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
       }
     },
 

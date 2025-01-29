@@ -23,13 +23,11 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import PaymentForm from "@/components/Shared/PaymentForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
-console.log(
-  "Stripe Publishable Key:",
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
-);
 
 type CartItem = {
   product: string;
@@ -39,61 +37,14 @@ type CartItem = {
   quantity: number;
 };
 
-const PaymentForm = ({
-  totalPrice,
-  onPaymentSuccess,
-}: {
-  totalPrice: number;
-  onPaymentSuccess: () => void;
-}) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    if (!stripe || !elements) {
-      toast.error("Stripe is not loaded yet!");
-      setLoading(false);
-      return;
-    }
-
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      toast.error("Card Element not found!");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      toast.success("Payment successful!");
-      onPaymentSuccess();
-    } catch (err) {
-      console.log("Error:", err);
-      toast.error("An unexpected error occurred.");
-    }
-
-    setLoading(false);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <CardElement className="p-2 mb-4 border rounded" />
-      <Button type="submit" disabled={!stripe || loading}>
-        {loading ? "Processing..." : `Pay $${totalPrice}`}
-      </Button>
-    </form>
-  );
-};
-
 const MainCartPage = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
+  console.log(items);
+
+  const user = useAppSelector(selectCurrentUser);
+  console.log(user);
+
   const [dialogOpen, setDialogOpen] = useState(false); // State for dialog
 
   const handleRemoveItem = (productId: string) => {
