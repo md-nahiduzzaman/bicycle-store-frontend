@@ -26,6 +26,11 @@ import { toast } from "sonner";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+console.log(
+  "Stripe Publishable Key:",
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+);
+
 type CartItem = {
   product: string;
   name: string;
