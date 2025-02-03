@@ -26,7 +26,7 @@ const PaymentForm = ({
   const [createPaymentIntent, { isLoading: isApiLoading }] =
     useCreatePaymentIntentMutation();
 
-  const [createOrder] = useCreateOrderMutation(); // ✅ Order create mutation
+  const [createOrder] = useCreateOrderMutation();
 
   const user = useAppSelector(selectCurrentUser);
   const items = useAppSelector((state) => state.cart.items);
@@ -76,7 +76,7 @@ const PaymentForm = ({
       } else if (result.paymentIntent?.status === "succeeded") {
         toast.success("Payment successful!");
 
-        // Step 4: Create Order in Database ✅
+        // Step 4: Create Order in Database
         const orderData = {
           email: user?.email,
           cartItems: items.map((item) => ({

@@ -5,14 +5,14 @@ interface PaymentState {
 }
 
 const initialState: PaymentState = {
-  clientSecret: null,
+  clientSecret: null as string | null,
 };
 
 const paymentSlice = createSlice({
   name: "payment",
   initialState,
   reducers: {
-    setClientSecret(state, action: PayloadAction<string>) {
+    setClientSecret: (state, action: PayloadAction<string | null>) => {
       state.clientSecret = action.payload;
     },
   },
