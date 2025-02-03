@@ -6,6 +6,10 @@ import { setClientSecret } from "@/redux/features/payment/paymentSlice";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { toast } from "sonner";
 import { useCreatePaymentIntentMutation } from "@/redux/features/payment/payment";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { clearCart } from "@/redux/features/cart/cartSlice";
+import { useCreateOrderMutation } from "@/redux/features/order/order";
 
 const PaymentForm = ({
   totalPrice,
@@ -21,6 +25,11 @@ const PaymentForm = ({
 
   const [createPaymentIntent, { isLoading: isApiLoading }] =
     useCreatePaymentIntentMutation();
+
+  const [createOrder] = useCreateOrderMutation(); // ✅ Order create mutation
+
+  const user = useAppSelector(selectCurrentUser);
+  const items = useAppSelector((state) => state.cart.items);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,13 +49,13 @@ const PaymentForm = ({
     }
 
     try {
-      // Step 1: Create payment intent via Redux (API)
+      // Step 1: Create payment intent
       const { data, error } = await createPaymentIntent({
         amount: totalPrice * 100,
       }); // amount in cents
 
       if (error) {
-        dispatch(setClientSecret(null)); // Reset client secret if error
+        dispatch(setClientSecret(null));
         toast.error("Failed to create payment intent.");
         setLoading(false);
         return;
@@ -55,7 +64,7 @@ const PaymentForm = ({
       // Step 2: Store client secret in Redux
       dispatch(setClientSecret(data.clientSecret));
 
-      // Step 3: Confirm card payment
+      // Step 3: Confirm payment
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
           card: cardElement,
@@ -66,7 +75,29 @@ const PaymentForm = ({
         toast.error(result.error.message);
       } else if (result.paymentIntent?.status === "succeeded") {
         toast.success("Payment successful!");
-        onPaymentSuccess();
+
+        // Step 4: Create Order in Database ✅
+        const orderData = {
+          email: user?.email,
+          cartItems: items.map((item) => ({
+            product: item.product,
+            quantity: item.quantity,
+          })),
+          totalPrice,
+          paymentData: {
+            paymentIntentId: result.paymentIntent.id,
+            paymentAmount: result.paymentIntent.amount,
+          },
+        };
+
+        const orderResponse = await createOrder(orderData);
+        if ("error" in orderResponse) {
+          toast.error("Order creation failed!");
+        } else {
+          toast.success("Order placed successfully!");
+          dispatch(clearCart());
+          onPaymentSuccess();
+        }
       }
 
       setLoading(false);
@@ -87,85 +118,3 @@ const PaymentForm = ({
 };
 
 export default PaymentForm;
-
-// import { Button } from "@/components/ui/button";
-// import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import { useState } from "react";
-// import { toast } from "sonner";
-// import axios from "axios";
-
-// const PaymentForm = ({
-//   totalPrice,
-//   onPaymentSuccess,
-// }: {
-//   totalPrice: number;
-//   onPaymentSuccess: () => void;
-// }) => {
-//   const stripe = useStripe();
-//   const elements = useElements();
-//   const [loading, setLoading] = useState(false);
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setLoading(true);
-
-//     if (!stripe || !elements) {
-//       toast.error("Stripe is not loaded yet!");
-//       setLoading(false);
-//       return;
-//     }
-
-//     const cardElement = elements.getElement(CardElement);
-
-//     if (!cardElement) {
-//       toast.error("Card Element not found!");
-//       setLoading(false);
-//       return;
-//     }
-
-//     try {
-//       // Fetch the client secret from the backend
-//       const { data } = await axios.post(
-//         "http://localhost:5000/api/payment/create-payment-intent",
-//         {
-//           amount: totalPrice * 100, // amount in cents
-//         }
-//       );
-
-//       const { error, paymentIntent } = await stripe.confirmCardPayment(
-//         data.clientSecret,
-//         {
-//           payment_method: {
-//             card: cardElement,
-//             billing_details: {
-//               name: "Customer Name", // Use user info if available
-//             },
-//           },
-//         }
-//       );
-
-//       if (error) {
-//         toast.error(error.message);
-//       } else if (paymentIntent?.status === "succeeded") {
-//         toast.success("Payment successful!");
-//         onPaymentSuccess();
-//       }
-//     } catch (err) {
-//       console.error("Error:", err);
-//       toast.error("An unexpected error occurred.");
-//     }
-
-//     setLoading(false);
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <CardElement className="p-2 mb-4 border rounded" />
-//       <Button type="submit" disabled={!stripe || loading}>
-//         {loading ? "Processing..." : `Pay $${totalPrice}`}
-//       </Button>
-//     </form>
-//   );
-// };
-
-// export default PaymentForm;

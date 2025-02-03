@@ -7,12 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdDeleteOutline } from "react-icons/md";
 import { RootState } from "@/redux/store";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import {
   Dialog,
   DialogContent,
@@ -22,7 +17,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import PaymentForm from "@/components/Shared/PaymentForm";
@@ -39,6 +33,7 @@ type CartItem = {
 
 const MainCartPage = () => {
   const dispatch = useDispatch();
+
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   console.log(items);
 
