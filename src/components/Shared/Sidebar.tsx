@@ -1,11 +1,4 @@
-import {
-  Users,
-  Package,
-  ShoppingCart,
-  Settings,
-  LogOut,
-  Home,
-} from "lucide-react";
+import { Users, Package, ShoppingCart, LogOut, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,

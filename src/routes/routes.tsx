@@ -1,7 +1,6 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import MainLayout from "@/components/layouts/MainLayout";
-
 import ProductDetail from "@/components/Shared/ProductDetail";
 import AllOrderInfo from "@/pages/Dashboard/Admin/AllOrderInfo";
 import AllProductInfo from "@/pages/Dashboard/Admin/AllProductInfo";
