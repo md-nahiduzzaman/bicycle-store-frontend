@@ -1,8 +1,11 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import MainLayout from "@/components/layouts/MainLayout";
-import Dashboard from "@/components/Shared/Dashboard";
+
 import ProductDetail from "@/components/Shared/ProductDetail";
+import AllOrderInfo from "@/pages/Dashboard/Admin/AllOrderInfo";
+import AllProductInfo from "@/pages/Dashboard/Admin/AllProductInfo";
+import AllUserInfo from "@/pages/Dashboard/Admin/AllUserInfo";
 import ErrorPage from "@/pages/ErrorPage";
 import Login from "@/pages/Login";
 import MainCartPage from "@/pages/MainCartPage";
@@ -40,6 +43,20 @@ const routes = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <AllUserInfo />,
+      },
+      {
+        path: "products",
+        element: <AllProductInfo />,
+      },
+      {
+        path: "orders",
+        element: <AllOrderInfo />,
+      },
+    ],
   },
 ]);
 

@@ -29,10 +29,9 @@ import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { Button } from "@/components/ui/button"; // ✅ Button import added
 
 const menuItems = [
-  { title: "Users", icon: Users, path: "/admin/users" },
-  { title: "Products", icon: Package, path: "/admin/products" },
-  { title: "Orders", icon: ShoppingCart, path: "/admin/orders" },
-  { title: "Settings", icon: Settings, path: "/admin/settings" },
+  { title: "Users", icon: Users, path: "/dashboard" },
+  { title: "Products", icon: Package, path: "/dashboard/products" },
+  { title: "Orders", icon: ShoppingCart, path: "/dashboard/orders" },
 ];
 
 const MainSidebar = () => {
@@ -40,7 +39,7 @@ const MainSidebar = () => {
   const user = useAppSelector(selectCurrentUser);
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="hidden w-64 shrink-0 md:block">
       <Sidebar collapsible="icon" className="">
         <SidebarHeader className="px-4 mt-6">
           <div className="flex items-center gap-2">
