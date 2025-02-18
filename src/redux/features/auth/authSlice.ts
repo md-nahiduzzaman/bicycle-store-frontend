@@ -1,12 +1,13 @@
 import { RootState } from "@/redux/store";
+import { TUser } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-export type TUser = {
-  email: string;
-  role: string;
-  iat: number;
-  exp: number;
-};
+// export type TUser = {
+//   email: string;
+//   role: string;
+//   iat: number;
+//   exp: number;
+// };
 
 type TAuthState = {
   user: null | TUser;

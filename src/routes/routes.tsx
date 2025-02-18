@@ -1,5 +1,7 @@
 import App from "@/App";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
 import MainLayout from "@/components/layouts/MainLayout";
+import Dashboard from "@/components/Shared/Dashboard";
 import ProductDetail from "@/components/Shared/ProductDetail";
 import ErrorPage from "@/pages/ErrorPage";
 import Login from "@/pages/Login";
@@ -34,6 +36,10 @@ const routes = createBrowserRouter([
         element: <ProductDetail />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
   },
 ]);
 
