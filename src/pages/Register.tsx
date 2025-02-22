@@ -56,6 +56,7 @@ const Register = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await register(values);
+    console.log(values);
   }
 
   const toastId = "register";

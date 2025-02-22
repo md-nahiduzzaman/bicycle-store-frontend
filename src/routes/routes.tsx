@@ -5,6 +5,7 @@ import ProductDetail from "@/components/Shared/ProductDetail";
 import AllOrderInfo from "@/pages/Dashboard/Admin/AllOrderInfo";
 import AllProductInfo from "@/pages/Dashboard/Admin/AllProductInfo";
 import AllUserInfo from "@/pages/Dashboard/Admin/AllUserInfo";
+import UpdateProduct from "@/pages/Dashboard/Admin/UpdateProduct";
 import ErrorPage from "@/pages/ErrorPage";
 import Login from "@/pages/Login";
 import MainCartPage from "@/pages/MainCartPage";
@@ -50,6 +51,10 @@ const routes = createBrowserRouter([
       {
         path: "products",
         element: <AllProductInfo />,
+      },
+      {
+        path: "update/:id",
+        element: <UpdateProduct />,
       },
       {
         path: "orders",
