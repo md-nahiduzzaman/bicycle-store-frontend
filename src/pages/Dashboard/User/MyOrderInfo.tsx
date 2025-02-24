@@ -8,8 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetOrdersQuery } from "@/redux/features/order/order";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
