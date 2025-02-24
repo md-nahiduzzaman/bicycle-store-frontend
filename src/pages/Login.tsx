@@ -112,7 +112,7 @@ const Login = () => {
         <div className="flex flex-col gap-4">
           <div className="w-full max-w-sm p-6 mx-auto rounded-md shadow">
             <div className="flex flex-col items-center mb-6">
-              <a href="https://shadcnblocks.com">
+              <a href="/">
                 <Bike
                   size={28}
                   className="p-1 text-white rounded-lg bg-slate-900"

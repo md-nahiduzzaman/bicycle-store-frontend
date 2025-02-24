@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router";
+import { Bike } from "lucide-react";
 
 const formSchema = z.object({
   name: z
@@ -84,7 +85,7 @@ const Register = () => {
         <div className="flex flex-col gap-4">
           <div className="w-full max-w-sm p-6 mx-auto rounded-md shadow">
             <div className="flex flex-col items-center mb-6">
-              <a href="https://shadcnblocks.com">
+              <a href="/">
                 <Bike
                   size={28}
                   className="p-1 text-white rounded-lg bg-slate-900"
