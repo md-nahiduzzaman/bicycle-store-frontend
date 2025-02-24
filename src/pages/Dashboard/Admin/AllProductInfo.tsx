@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Loader2, Pencil } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +35,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery,
 } from "@/redux/features/product/product";
 import {
@@ -75,14 +76,19 @@ const AllProductInfo = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   // Fetch products using RTK Query
-  const { isLoading, data, error, refetch } = useGetProductsQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-  });
+  // const { isLoading, data, error, refetch } = useGetProductsQuery(undefined, {
+  //   refetchOnMountOrArgChange: true,
+  // });
+
+  const { data, error, isLoading, refetch } = useGetProductsQuery({});
   console.log(data);
 
   // Create product mutation
   const [createProduct, { isLoading: isCreating, isError }] =
     useCreateProductMutation();
+
+  // Delete product mutation
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   // Form Hook
   const form = useForm<z.infer<typeof formSchema>>({
@@ -140,6 +146,18 @@ const AllProductInfo = () => {
     } catch (error) {
       console.error("Submission Error:", error);
       toast.error("Failed to add product. Please try again.");
+    }
+  };
+
+  //  Handle delete product
+  const handleDelete = async (productId: string) => {
+    try {
+      await deleteProduct(productId).unwrap();
+      toast.success("Product deleted successfully!");
+      refetch(); // Refetch products list to update UI
+    } catch (error) {
+      console.error("Delete failed", error);
+      toast.error("Failed to delete product. Please try again.");
     }
   };
 
@@ -395,12 +413,21 @@ const AllProductInfo = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center justify-center gap-2 text-center">
-                    <Button className="space-x-1">
+                    <Button className="flex items-center space-x-1">
                       <Link to={`/dashboard/update/${product._id}`}>
-                        <span>Update Product</span> <Pencil size={18} />
+                        <span>Update</span>
                       </Link>
                     </Button>
-                    <Button>Delete</Button>
+                    <Button
+                      onClick={() => handleDelete(product._id)}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        "Delete"
+                      )}
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>

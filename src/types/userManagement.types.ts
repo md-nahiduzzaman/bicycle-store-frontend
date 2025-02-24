@@ -3,7 +3,7 @@ export interface TUser {
   name: string;
   email: string;
   password: string;
-  role: "user" | "admin";
+  role: "customer" | "admin";
   isBlocked?: boolean;
   createdAt?: string;
   updatedAt?: string;
@@ -31,7 +31,7 @@ export interface TUserBlock {
 }
 
 export interface TUserChangeRole {
-  role: "user" | "admin";
+  role: "customer" | "admin";
 }
 
 export interface TUserResponse {

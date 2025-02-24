@@ -29,3 +29,12 @@ export interface TProductAction {
   type: string;
   payload: TProduct[];
 }
+
+export interface TFilters {
+  searchTerm?: string;
+  priceRange?: string; // e.g., "0-100", "100-500"
+  model?: string;
+  brand?: string;
+  category?: string;
+  availability?: string; // e.g., "in_stock", "out_of_stock"
+}

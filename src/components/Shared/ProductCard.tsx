@@ -26,8 +26,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="h-full max-w-sm mt-8 overflow-hidden rounded-lg">
-      <Link to={`/product/${product._id}`}>
+    <div className="h-full max-w-sm p-4 border border-gray-300 rounded-lg">
+      <Link to={`/product/${product._id}`} className="block">
         <div className="relative group">
           <img
             src={
@@ -35,29 +35,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               "https://motto-spin.myshopify.com/cdn/shop/files/1_3d7043df-69aa-4cce-ac02-eb9d90301e66.jpg?v=1730455869&width=750"
             }
             alt={product.name}
-            className="object-cover w-full transition rounded-xl h-96 group-hover:opacity-80"
+            className="object-cover object-center w-full transition rounded-xl h-80 group-hover:opacity-80"
           />
-
           <Badge className="absolute text-xs font-medium top-4 left-4">
-            Badge
+            New
           </Badge>
         </div>
       </Link>
 
-      <div className="flex items-end justify-between pt-4">
-        <div>
-          <h3 className="text-xl">{product.name}</h3>
-
-          <p className="mt-2 text-gray-600">
-            <span className="text-base">${product.price}</span>
-          </p>
-        </div>
-
-        {/* <Button className="w-2/6">Add to Cart</Button> */}
+      {/* Name & Price Row */}
+      <div className="flex items-center justify-between pt-4">
+        <h3 className="text-lg font-semibold">{product.name}</h3>
+        <p className="text-base font-medium text-gray-700">${product.price}</p>
       </div>
-      <Button className="w-2/6 mt-2" onClick={handleAddToCart}>
-        Add to Cart
-      </Button>
+
+      {/* Buttons Row */}
+      <div className="flex items-center gap-2 mt-4">
+        <Link to={`/product/${product._id}`} className="w-1/2">
+          <Button variant="outline" className="w-full">
+            View Item
+          </Button>
+        </Link>
+        <Button className="w-1/2" onClick={handleAddToCart}>
+          Order Now
+        </Button>
+      </div>
     </div>
   );
 };

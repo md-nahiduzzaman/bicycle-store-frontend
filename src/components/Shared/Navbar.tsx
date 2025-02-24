@@ -1,7 +1,6 @@
-import { Menu, ShoppingBag } from "lucide-react";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Bike, LogOut, Menu, ShoppingBag, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import {
@@ -11,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,17 +20,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSelector } from "react-redux";
-
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 const Navbar = () => {
   const { totalQuantity, totalPrice } = useSelector((state: any) => state.cart);
   const dispatch = useAppDispatch();
-
   const user = useAppSelector(selectCurrentUser);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md">
@@ -41,113 +44,96 @@ const Navbar = () => {
           <nav className="justify-between hidden lg:flex">
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  className="w-8"
-                  alt="logo"
+                <Bike
+                  size={28}
+                  className="p-1 text-white rounded-lg bg-slate-900"
                 />
-                <span className="text-lg font-semibold">Bicycle Store</span>
+                <span className="text-xl font-black">Spinzo</span>
               </div>
-              <div className="flex items-center">
-                <a
-                  className={cn(
-                    "text-muted-foreground",
-                    navigationMenuTriggerStyle,
-                    buttonVariants({
-                      variant: "ghost",
-                    })
-                  )}
-                  href="#"
-                >
-                  HOME
-                </a>
 
-                <a
-                  className={cn(
-                    "text-muted-foreground",
-                    navigationMenuTriggerStyle,
-                    buttonVariants({
-                      variant: "ghost",
-                    })
-                  )}
-                  href="#"
-                >
-                  PRODUCTS
-                </a>
-                <a
-                  className={cn(
-                    "text-muted-foreground",
-                    navigationMenuTriggerStyle,
-                    buttonVariants({
-                      variant: "ghost",
-                    })
-                  )}
-                  href="#"
-                >
-                  ABOUT
-                </a>
+              {/* Navigation Links */}
+              <div className="flex items-center">
+                {["/", "/products", "/about"].map((path, index) => {
+                  const labels = ["HOME", "PRODUCTS", "ABOUT"];
+                  return (
+                    <NavLink
+                      key={path}
+                      to={path}
+                      className={({ isActive }) =>
+                        cn(
+                          "text-muted-foreground px-3 py-2",
+                          navigationMenuTriggerStyle,
+                          buttonVariants({ variant: "ghost" }),
+                          isActive
+                            ? "text-gray-800 border-b-2 border-gray-800 rounded-none"
+                            : ""
+                        )
+                      }
+                    >
+                      {labels[index]}
+                    </NavLink>
+                  );
+                })}
               </div>
             </div>
 
+            {/* User Section */}
             <div className="flex items-center gap-2">
               {user ? (
-                <div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="relative w-8 h-8 rounded-full"
-                      >
-                        <Avatar className="w-8 h-8">
-                          <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                          <AvatarFallback>SC</AvatarFallback>
-                        </Avatar>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-56"
-                      align="end"
-                      forceMount
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative w-8 h-8 rounded-full"
                     >
-                      <DropdownMenuLabel className="font-normal">
-                        <div className="flex flex-col space-y-1">
-                          <p className="text-sm font-medium leading-none">
-                            shadcn
-                          </p>
-                          <p className="text-xs leading-none text-muted-foreground">
-                            m@example.com
-                          </p>
-                        </div>
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Settings</DropdownMenuItem>
-                        <DropdownMenuItem>New Team</DropdownMenuItem>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => dispatch(logout())}>
-                        Log out
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              ) : (
-                <div>
-                  <NavLink to="/login">
-                    <Button variant="outline" size="sm">
-                      Log in
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage>
+                          <User size={32} />
+                        </AvatarImage>
+                        <AvatarFallback>
+                          <User size={32} />
+                        </AvatarFallback>
+                      </Avatar>
                     </Button>
-                  </NavLink>
-                </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          {user.name}
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>
+                        <NavLink to="/dashboard">Dashboard</NavLink>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="text-red-600"
+                    >
+                      <LogOut size={16} /> Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <NavLink to="/login">
+                  <Button variant="outline" size="sm">
+                    Log in
+                  </Button>
+                </NavLink>
               )}
 
               {/* Cart Icon with Badge */}
               <div className="relative flex items-center">
                 <Link to="/cart">
                   <ShoppingBag className="w-6 h-6 text-gray-700" />
-
                   {totalQuantity > 0 && (
                     <span className="absolute -top-2 -right-3 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full font-number">
                       {totalQuantity}
@@ -161,7 +147,7 @@ const Navbar = () => {
             </div>
           </nav>
 
-          {/* mobile view */}
+          {/* Mobile Navigation */}
           <div className="block lg:hidden">
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between w-full pr-4">
@@ -171,7 +157,7 @@ const Navbar = () => {
                     className="w-8"
                     alt="logo"
                   />
-                  <span className="text-lg font-semibold">Bicycle Store</span>
+                  <span className="text-lg font-semibold">Spinzo</span>
                 </div>
                 <ShoppingBag className="w-6 h-6 text-gray-700" />
               </div>
@@ -190,27 +176,115 @@ const Navbar = () => {
                           className="w-8"
                           alt="logo"
                         />
-                        <span className="text-lg font-semibold">
-                          Bicycle Store
-                        </span>
+                        <span className="text-lg font-semibold">Spinzo</span>
                       </div>
                     </SheetTitle>
                   </SheetHeader>
                   <div className="flex flex-col gap-4 mt-6 mb-6">
-                    <a href="#" className="font-semibold">
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        `font-semibold ${
+                          isActive ? "text-primary font-bold" : ""
+                        }`
+                      }
+                    >
                       Home
-                    </a>
-
-                    <a href="#" className="font-semibold">
-                      Pricing
-                    </a>
-                    <a href="#" className="font-semibold">
-                      Blog
-                    </a>
+                    </NavLink>
+                    <NavLink
+                      to="/products"
+                      className={({ isActive }) =>
+                        `font-semibold ${
+                          isActive ? "text-primary font-bold" : ""
+                        }`
+                      }
+                    >
+                      Products
+                    </NavLink>
+                    <NavLink
+                      to="/about"
+                      className={({ isActive }) =>
+                        `font-semibold ${
+                          isActive ? "text-primary font-bold" : ""
+                        }`
+                      }
+                    >
+                      About
+                    </NavLink>
                   </div>
 
                   <div className="flex flex-col gap-3">
-                    <Button variant="outline">Log in</Button>
+                    <div className="flex items-center gap-2">
+                      {user ? (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className="relative w-8 h-8 rounded-full"
+                            >
+                              <Avatar className="w-8 h-8">
+                                <AvatarImage>
+                                  <User size={32} />
+                                </AvatarImage>
+                                <AvatarFallback>
+                                  <User size={32} />
+                                </AvatarFallback>
+                              </Avatar>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            className="w-56"
+                            align="end"
+                            forceMount
+                          >
+                            <DropdownMenuLabel className="font-normal">
+                              <div className="flex flex-col space-y-1">
+                                <p className="text-sm font-medium leading-none">
+                                  {user.name}
+                                </p>
+                                <p className="text-xs leading-none text-muted-foreground">
+                                  {user.email}
+                                </p>
+                              </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                              <DropdownMenuItem>
+                                <NavLink to="/dashboard">Dashboard</NavLink>
+                              </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={handleLogout}
+                              className="text-red-600"
+                            >
+                              <LogOut size={16} /> Log out
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      ) : (
+                        <NavLink to="/login">
+                          <Button variant="outline" size="sm">
+                            Log in
+                          </Button>
+                        </NavLink>
+                      )}
+
+                      {/* Cart Icon with Badge */}
+                      <div className="relative flex items-center">
+                        <Link to="/cart">
+                          <ShoppingBag className="w-6 h-6 text-gray-700" />
+                          {totalQuantity > 0 && (
+                            <span className="absolute -top-2 -right-3 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full font-number">
+                              {totalQuantity}
+                            </span>
+                          )}
+                        </Link>
+                      </div>
+                      <span className="ml-4 text-lg font-semibold text-gray-700 font-number">
+                        ${totalPrice.toFixed(2)}
+                      </span>
+                    </div>
                   </div>
                 </SheetContent>
               </Sheet>

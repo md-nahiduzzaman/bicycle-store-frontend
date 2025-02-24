@@ -21,7 +21,7 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -159,6 +159,9 @@ const Login = () => {
                 <Button type="submit" className="w-full mt-2">
                   Login
                 </Button>
+                <div className="mt-4 text-sm text-center">
+                  Already have an account? <Link to="/register">Register</Link>
+                </div>
               </form>
             </Form>
           </div>
