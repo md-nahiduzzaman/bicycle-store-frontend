@@ -113,14 +113,14 @@ const AllUserInfo = () => {
                 <div className="flex items-center justify-center gap-2 text-center">
                   <Button
                     onClick={() => handleBlockToggle(user._id, user.isBlocked)}
-                    disabled={isProcessing === user._id || user.isBlocked} // Disable if user is already blocked
+                    disabled={isProcessing === user._id || user.isBlocked}
                   >
                     {isProcessing === user._id ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : user.isBlocked ? (
-                      "Blocked" // Show "Blocked" when the user is blocked
+                      "Blocked"
                     ) : (
-                      "Block" // Show "Block" when the user is not blocked
+                      "Block"
                     )}
                   </Button>
                 </div>

@@ -2,7 +2,7 @@ import { useGetProductByIdQuery } from "@/redux/features/product/product";
 import { useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/features/cart/cartSlice"; // Import action
+import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useState } from "react";
 
 const ProductDetail = () => {
@@ -10,7 +10,6 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useGetProductByIdQuery(id);
 
-  // ✅ Move useState to the top before any return
   const [quantity, setQuantity] = useState(1);
 
   // Handle loading and errors
@@ -18,14 +17,14 @@ const ProductDetail = () => {
   if (isError) return <p>Error</p>;
   if (!data?.data) return <p>Product not found</p>;
 
-  const product = data.data; // Extract product safely
+  const product = data.data;
 
   // Handle quantity change
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Math.max(
       1,
       Math.min(Number(e.target.value), product.quantity)
-    ); // Ensure valid range
+    );
     setQuantity(value);
   };
 
@@ -35,7 +34,7 @@ const ProductDetail = () => {
         product: product._id,
         name: product.name,
         price: product.price,
-        quantity, // Send updated quantity
+        quantity,
         stock: product.quantity,
         imageUrl: product.imageUrl || "",
       })

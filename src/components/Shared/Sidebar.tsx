@@ -8,6 +8,7 @@ import {
   UserRound,
   Menu,
   User,
+  Bike,
 } from "lucide-react";
 import {
   Sidebar,
@@ -70,11 +71,7 @@ const MainSidebar = () => {
     <>
       <SidebarHeader className="px-4 mt-6">
         <div className="flex items-center gap-2">
-          <img
-            src="https://shadcnblocks.com/images/block/block-1.svg"
-            className="w-8"
-            alt="logo"
-          />
+          <Bike size={28} className="p-1 text-white rounded-lg bg-slate-900" />
           <span className="text-lg">Spinzo</span>
         </div>
       </SidebarHeader>

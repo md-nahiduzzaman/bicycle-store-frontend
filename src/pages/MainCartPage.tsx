@@ -40,7 +40,7 @@ const MainCartPage = () => {
   const user = useAppSelector(selectCurrentUser);
   console.log(user);
 
-  const [dialogOpen, setDialogOpen] = useState(false); // State for dialog
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleRemoveItem = (productId: string) => {
     dispatch(removeFromCart(productId));

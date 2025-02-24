@@ -85,10 +85,9 @@ const Register = () => {
           <div className="w-full max-w-sm p-6 mx-auto rounded-md shadow">
             <div className="flex flex-col items-center mb-6">
               <a href="https://shadcnblocks.com">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  alt="logo"
-                  className="w-auto h-10 mb-7"
+                <Bike
+                  size={28}
+                  className="p-1 text-white rounded-lg bg-slate-900"
                 />
               </a>
               <p className="mb-2 text-2xl font-bold font-heading">Spinzo</p>

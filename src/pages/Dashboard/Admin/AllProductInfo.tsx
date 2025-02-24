@@ -414,7 +414,7 @@ const AllProductInfo = () => {
                 <TableCell>
                   <div className="flex items-center justify-center gap-2 text-center">
                     <Button className="flex items-center space-x-1">
-                      <Link to={`/dashboard/update/${product._id}`}>
+                      <Link to={`/dashboard/admin/update/${product._id}`}>
                         <span>Update</span>
                       </Link>
                     </Button>

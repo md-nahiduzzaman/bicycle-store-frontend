@@ -152,10 +152,9 @@ const Navbar = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between w-full pr-4">
                 <div className="flex items-center">
-                  <img
-                    src="https://shadcnblocks.com/images/block/block-1.svg"
-                    className="w-8"
-                    alt="logo"
+                  <Bike
+                    size={28}
+                    className="p-1 text-white rounded-lg bg-slate-900"
                   />
                   <span className="text-lg font-semibold">Spinzo</span>
                 </div>
@@ -171,10 +170,9 @@ const Navbar = () => {
                   <SheetHeader>
                     <SheetTitle>
                       <div className="flex items-center gap-2">
-                        <img
-                          src="https://shadcnblocks.com/images/block/block-1.svg"
-                          className="w-8"
-                          alt="logo"
+                        <Bike
+                          size={28}
+                          className="p-1 text-white rounded-lg bg-slate-900"
                         />
                         <span className="text-lg font-semibold">Spinzo</span>
                       </div>

@@ -137,7 +137,7 @@ const AllProduct = () => {
                 model: "",
                 brand: "all",
                 category: "all",
-                inStock: "all", // Reset to 'all'
+                inStock: "all",
               })
             }
           >

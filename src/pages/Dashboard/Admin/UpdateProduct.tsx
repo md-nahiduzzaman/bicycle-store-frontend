@@ -117,7 +117,7 @@ const UpdateProduct = () => {
       );
       const uploadedImageUrl = data.data.display_url;
       setImageUrl(uploadedImageUrl);
-      form.setValue("img", uploadedImageUrl); // Set image URL in the form
+      form.setValue("img", uploadedImageUrl);
     } catch (error) {
       console.error("Image upload failed", error);
       toast.error("Image upload failed. Please try again.");
