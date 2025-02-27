@@ -158,7 +158,18 @@ const Navbar = () => {
                   />
                   <span className="text-lg font-semibold">Spinzo</span>
                 </div>
-                <ShoppingBag className="w-6 h-6 text-gray-700" />
+                {/* <ShoppingBag className="w-6 h-6 text-gray-700" /> */}
+                {/* Cart Icon with Badge */}
+                <div className="relative flex items-center">
+                  <Link to="/cart">
+                    <ShoppingBag className="w-6 h-6 text-gray-700" />
+                    {totalQuantity > 0 && (
+                      <span className="absolute -top-2 -right-3 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full font-number">
+                        {totalQuantity}
+                      </span>
+                    )}
+                  </Link>
+                </div>
               </div>
               <Sheet>
                 <SheetTrigger asChild>
@@ -269,7 +280,7 @@ const Navbar = () => {
                       )}
 
                       {/* Cart Icon with Badge */}
-                      <div className="relative flex items-center">
+                      {/* <div className="relative flex items-center">
                         <Link to="/cart">
                           <ShoppingBag className="w-6 h-6 text-gray-700" />
                           {totalQuantity > 0 && (
@@ -278,7 +289,7 @@ const Navbar = () => {
                             </span>
                           )}
                         </Link>
-                      </div>
+                      </div> */}
                       <span className="ml-4 text-lg font-semibold text-gray-700 font-number">
                         ${totalPrice.toFixed(2)}
                       </span>

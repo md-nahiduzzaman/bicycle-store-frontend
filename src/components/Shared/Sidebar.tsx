@@ -157,13 +157,22 @@ const MainSidebar = () => {
       {/* Mobile Sidebar using Sheet component */}
       <div className="md:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
+          {/* <SheetTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
               className="fixed left-auto z-40 top-4"
             >
               <Menu size={24} />
+            </Button>
+          </SheetTrigger> */}
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="fixed z-40 left-4 top-4"
+            >
+              <Menu className="size-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
