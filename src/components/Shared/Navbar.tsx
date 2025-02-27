@@ -54,7 +54,7 @@ const Navbar = () => {
               {/* Navigation Links */}
               <div className="flex items-center">
                 {["/", "/products", "/about"].map((path, index) => {
-                  const labels = ["HOME", "PRODUCTS", "ABOUT"];
+                  const labels = ["HOME", "ALL BICYCLE", "ABOUT"];
                   return (
                     <NavLink
                       key={path}
@@ -197,7 +197,7 @@ const Navbar = () => {
                         }`
                       }
                     >
-                      Products
+                      All Bicycles
                     </NavLink>
                     <NavLink
                       to="/about"

@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Roadster 5000",
+    "brand": "SpeedX",
+    "price": 300,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/2_7247315b-d80c-4c50-bad3-10cf91a8ef8a.jpg?v=1730453234&width=1920",
+    "type": "Road",
+    "description": "A premium road bike designed for speed and performance.",
+    "quantity": 20,
+    "inStock": true
+  },
+  {
+    "name": "TrailMaster X",
+    "brand": "RockRider",
+    "price": 450,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/mountain_bike.jpg?v=1730453234&width=1920",
+    "type": "Mountain",
+    "description": "A rugged mountain bike built for off-road adventures.",
+    "quantity": 15,
+    "inStock": true
+  },
+  {
+    "name": "Urban Glide",
+    "brand": "CityCycle",
+    "price": 280,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/hybrid_bike.jpg?v=1730453234&width=1920",
+    "type": "Hybrid",
+    "description": "A hybrid bike perfect for city commutes and leisure rides.",
+    "quantity": 10,
+    "inStock": true
+  },
+  {
+    "name": "BMX Pro 300",
+    "brand": "ExtremeX",
+    "price": 320,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/bmx_bike.jpg?v=1730453234&width=1920",
+    "type": "BMX",
+    "description": "A durable BMX bike designed for tricks and stunts.",
+    "quantity": 12,
+    "inStock": true
+  },
+  {
+    "name": "Volt E-Bike",
+    "brand": "EcoRide",
+    "price": 1200,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/electric_bike.jpg?v=1730453234&width=1920",
+    "type": "Electric",
+    "description": "An eco-friendly electric bike for effortless riding.",
+    "quantity": 8,
+    "inStock": true
+  },
+  {
+    "name": "Speedster 700",
+    "brand": "FastWheel",
+    "price": 600,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/road_bike.jpg?v=1730453234&width=1920",
+    "type": "Road",
+    "description": "A lightweight road bike built for competitive cycling.",
+    "quantity": 18,
+    "inStock": true
+  },
+  {
+    "name": "Mountain King",
+    "brand": "Summit",
+    "price": 550,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/mountain_bike2.jpg?v=1730453234&width=1920",
+    "type": "Mountain",
+    "description": "A high-performance mountain bike for rough terrains.",
+    "quantity": 14,
+    "inStock": true
+  },
+  {
+    "name": "Commuter Pro",
+    "brand": "MetroBike",
+    "price": 310,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/hybrid_bike2.jpg?v=1730453234&width=1920",
+    "type": "Hybrid",
+    "description": "A stylish and comfortable bike for daily commutes.",
+    "quantity": 16,
+    "inStock": true
+  },
+  {
+    "name": "BMX Nitro",
+    "brand": "XtremeRiders",
+    "price": 350,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/bmx_bike2.jpg?v=1730453234&width=1920",
+    "type": "BMX",
+    "description": "A sturdy BMX bike for high-energy stunts.",
+    "quantity": 9,
+    "inStock": true
+  },
+  {
+    "name": "EcoCharge",
+    "brand": "GreenWheels",
+    "price": 1300,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/electric_bike2.jpg?v=1730453234&width=1920",
+    "type": "Electric",
+    "description": "A powerful electric bike with a long battery life.",
+    "quantity": 5,
+    "inStock": true
+  },
+  {
+    "name": "Thunder Road",
+    "brand": "SpeedMax",
+    "price": 750,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/road_bike2.jpg?v=1730453234&width=1920",
+    "type": "Road",
+    "description": "A performance-focused road bike with an aerodynamic frame.",
+    "quantity": 11,
+    "inStock": true
+  },
+  {
+    "name": "RockClimber",
+    "brand": "TrailBlaze",
+    "price": 500,
+    "img": "https://motto-spin.myshopify.com/cdn/shop/files/mountain_bike3.jpg?v=1730453234&width=1920",
+    "type": "Mountain",
+    "description": "An ultra-durable mountain bike for extreme trails.",
+    "quantity": 13,
+    "inStock": true
+  }
+]

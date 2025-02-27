@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createProduct: builder.mutation({
-      query: (userInfo) => ({
+      query: (productInfo) => ({
         url: "/products",
         method: "POST",
-        body: userInfo,
+        body: productInfo,
       }),
     }),
 
@@ -14,40 +15,28 @@ const productApi = baseApi.injectEndpoints({
     getProducts: builder.query({
       query: ({
         searchTerm = "",
-        filters = {},
+        filters = { type: "all", brand: "all", inStock: "all" },
       }: {
         searchTerm?: string;
-        filters?: any;
+        filters?: { type: string; brand: string; inStock: string };
       }) => {
-        let queryParams = "";
+        const queryParams = new URLSearchParams();
 
         if (searchTerm) {
-          queryParams += `searchTerm=${searchTerm}&`;
+          queryParams.append("searchTerm", searchTerm);
         }
 
-        if (filters) {
-          if (filters.priceRange) {
-            queryParams += `priceRange=${filters.priceRange}&`;
-          }
-          if (filters.model) {
-            queryParams += `model=${filters.model}&`;
-          }
-          if (filters.brand && filters.brand !== "all") {
-            queryParams += `brand=${filters.brand}&`;
-          }
-          if (filters.category && filters.category !== "all") {
-            queryParams += `category=${filters.category}&`;
-          }
-          if (filters.inStock && filters.inStock !== "all") {
-            queryParams += `inStock=${filters.inStock}&`;
-          }
+        if (filters.brand && filters.brand !== "all") {
+          queryParams.append("brand", filters.brand);
+        }
+        if (filters.type && filters.type !== "all") {
+          queryParams.append("type", filters.type);
+        }
+        if (filters.inStock && filters.inStock !== "all") {
+          queryParams.append("inStock", filters.inStock);
         }
 
-        if (queryParams.endsWith("&")) {
-          queryParams = queryParams.slice(0, -1);
-        }
-
-        return `/products?${queryParams}`;
+        return `/products?${queryParams.toString()}`;
       },
     }),
 
@@ -56,10 +45,10 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     updateProduct: builder.mutation({
-      query: ({ id, ...userInfo }) => ({
+      query: ({ id, ...productInfo }) => ({
         url: `/products/${id}`,
         method: "PUT",
-        body: userInfo,
+        body: productInfo,
       }),
     }),
 
@@ -75,6 +64,7 @@ const productApi = baseApi.injectEndpoints({
 export const {
   useCreateProductMutation,
   useGetProductsQuery,
+  useGetFiltersQuery,
   useGetProductByIdQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,

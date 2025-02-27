@@ -47,10 +47,10 @@ const Login = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    // defaultValues: {
-    //   email: "john@example3.com",
-    //   password: "securepassword",
-    // },
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const [login, { isLoading, isSuccess, data, isError, error }] =
@@ -108,7 +108,7 @@ const Login = () => {
 
   return (
     <section className="py-32">
-      <div className="container">
+      <div className="container px-4 mx-auto">
         <div className="flex flex-col gap-4">
           <div className="w-full max-w-sm p-6 mx-auto rounded-md shadow">
             <div className="flex flex-col items-center mb-6">
@@ -160,7 +160,10 @@ const Login = () => {
                   Login
                 </Button>
                 <div className="mt-4 text-sm text-center">
-                  Already have an account? <Link to="/register">Register</Link>
+                  Already have an account?{" "}
+                  <Link to="/register" className="text-red-500 underline">
+                    Register
+                  </Link>
                 </div>
               </form>
             </Form>

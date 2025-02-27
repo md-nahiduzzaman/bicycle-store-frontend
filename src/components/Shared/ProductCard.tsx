@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         price: product.price,
         quantity: 1,
         stock: product.quantity,
-        imageUrl: product.imageUrl || "",
+        imageUrl: product.img || "",
       })
     );
   };
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="relative group">
           <img
             src={
-              product.imageUrl ||
+              product.img ||
               "https://motto-spin.myshopify.com/cdn/shop/files/1_3d7043df-69aa-4cce-ac02-eb9d90301e66.jpg?v=1730455869&width=750"
             }
             alt={product.name}

@@ -7,7 +7,7 @@ export interface TProduct {
   description: string;
   quantity: number;
   inStock: boolean;
-  imageUrl?: string;
+  img?: string;
 
   createdAt: string; // ISO string for date
   updatedAt: string; // ISO string for date

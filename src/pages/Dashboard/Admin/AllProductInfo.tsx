@@ -80,7 +80,13 @@ const AllProductInfo = () => {
   //   refetchOnMountOrArgChange: true,
   // });
 
-  const { data, error, isLoading, refetch } = useGetProductsQuery({});
+  // const { data, error, isLoading, refetch } = useGetProductsQuery({});
+  const { data, error, isLoading, refetch } = useGetProductsQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
   console.log(data);
 
   // Create product mutation

@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import PaymentForm from "@/components/Shared/PaymentForm";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -33,6 +34,7 @@ type CartItem = {
 
 const MainCartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   console.log(items);
@@ -52,6 +54,16 @@ const MainCartPage = () => {
 
   const handlePaymentSuccess = () => {
     setDialogOpen(false); // Close the dialog
+  };
+
+  const handlePlaceOrder = () => {
+    if (!user) {
+      // If user is not logged in, redirect to login page
+      navigate("/login");
+    } else {
+      // If user is logged in, open the payment dialog
+      setDialogOpen(true);
+    }
   };
 
   return (
@@ -123,7 +135,9 @@ const MainCartPage = () => {
             <div className="flex justify-end">
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button variant="outline">Place Your Order</Button>
+                  <Button variant="outline" onClick={handlePlaceOrder}>
+                    Place Your Order
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>

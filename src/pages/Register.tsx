@@ -81,7 +81,7 @@ const Register = () => {
 
   return (
     <section className="py-32">
-      <div className="container">
+      <div className="container px-4 mx-auto">
         <div className="flex flex-col gap-4">
           <div className="w-full max-w-sm p-6 mx-auto rounded-md shadow">
             <div className="flex flex-col items-center mb-6">
@@ -151,7 +151,10 @@ const Register = () => {
                   Register
                 </Button>
                 <div className="mt-4 text-sm text-center">
-                  Already have an account? <Link to="/login">Login</Link>
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-red-500 underline">
+                    Login
+                  </Link>
                 </div>
               </form>
             </Form>

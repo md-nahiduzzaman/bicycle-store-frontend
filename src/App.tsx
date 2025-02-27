@@ -13,7 +13,7 @@ function App() {
 
   // Query to fetch products
   const { isLoading, data, error } = useGetProductsQuery(
-    { searchTerm: "", filters: {} },
+    { searchTerm: "" },
     {
       refetchOnMountOrArgChange: true,
     }
@@ -65,7 +65,7 @@ function App() {
         {data?.data?.length > 8 && (
           <div className="flex justify-center mt-16 mb-8">
             <Button onClick={() => navigate("/products")} size={"lg"}>
-              Load More
+              View All
             </Button>
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,31 +29,18 @@ import {
   useUpdateProductMutation,
 } from "@/redux/features/product/product";
 
-// Product type definition
-export type Product = {
-  _id: string;
-  name: string;
-  brand: string;
-  img: string;
-  price: number;
-  type: "Mountain" | "Road" | "Hybrid" | "BMX" | "Electric";
-  description: string;
-  quantity: number;
-  inStock: boolean;
-};
-
-// Form Schema using Zod for validation
+// Zod Schema (All fields optional)
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters.").optional(),
   brand: z.string().min(2, "Brand name is required.").optional(),
   img: z.string().url("Image URL must be valid").optional(),
-  price: z.coerce.number().min(1, "Price must be at least 1."),
+  price: z.coerce.number().min(1, "Price must be at least 1.").optional(),
   type: z.enum(["Mountain", "Road", "Hybrid", "BMX", "Electric"]).optional(),
   description: z
     .string()
     .min(5, "Description must be at least 5 characters.")
     .optional(),
-  quantity: z.coerce.number().min(1, "Quantity must be at least 1."),
+  quantity: z.coerce.number().min(1, "Quantity must be at least 1.").optional(),
   inStock: z.boolean().optional(),
 });
 
@@ -70,32 +57,22 @@ const UpdateProduct = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: productData?.name || "",
-      brand: productData?.brand || "",
-      img: productData?.img || "",
-      price: productData?.price || 0,
-      type: productData?.type || "Mountain",
-      description: productData?.description || "",
-      quantity: productData?.quantity || 0,
-      inStock: productData?.inStock !== undefined ? productData?.inStock : true,
-    },
+    defaultValues: {},
   });
 
   useEffect(() => {
-    if (productData?.data) {
-      const product = productData.data;
+    if (productData) {
       form.reset({
-        name: product.name || "",
-        brand: product.brand || "",
-        img: product.img || "",
-        price: product.price || 0,
-        type: product.type || "Mountain",
-        description: product.description || "",
-        quantity: product.quantity || 0,
-        inStock: product.inStock !== undefined ? product.inStock : true,
+        name: productData.name,
+        brand: productData.brand,
+        img: productData.img,
+        price: productData.price,
+        type: productData.type,
+        description: productData.description,
+        quantity: productData.quantity,
+        inStock: productData.inStock,
       });
-      setImageUrl(product.img);
+      setImageUrl(productData.img);
     }
   }, [productData, form]);
 
@@ -125,10 +102,21 @@ const UpdateProduct = () => {
   };
 
   const onSubmit = async (values: FormData) => {
+    const filteredValues = Object.fromEntries(
+      Object.entries(values).filter(
+        ([value]) => value !== undefined && value !== ""
+      )
+    );
+
+    if (Object.keys(filteredValues).length === 0) {
+      toast.info("No changes detected.");
+      return;
+    }
+
     try {
-      await updateProduct({ id, ...values }).unwrap();
+      await updateProduct({ id, ...filteredValues }).unwrap();
       toast.success("Product updated successfully!");
-      navigate("/dashboard/products");
+      navigate("/dashboard/admin/products");
     } catch (error) {
       console.error("Update Error:", error);
       toast.error("Failed to update product. Please try again.");
