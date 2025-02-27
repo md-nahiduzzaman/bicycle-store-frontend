@@ -36,7 +36,7 @@ function App() {
         <h1 className="text-3xl font-semibold text-center md:text-5xl">
           Discover Your Perfect Bike
         </h1>
-        <p className="mt-4 text-lg text-center text-gray-600 md:text-xl w-[50%] mx-auto">
+        <p className="mt-4 text-lg text-center text-gray-600 md:text-xl md:w-[50%] mx-auto">
           Find the best bicycles for your adventure, whether it's for city
           commuting, mountain trails, or a leisurely ride. Shop now and
           experience the thrill!
@@ -77,7 +77,7 @@ function App() {
           <h2 className="text-3xl font-semibold text-center md:text-5xl">
             What Our Customers Are Saying
           </h2>
-          <p className="mt-4 text-lg text-center text-gray-600 md:text-xl w-[50%] mx-auto">
+          <p className="mt-4 text-lg text-center text-gray-600 md:text-xl md:w-[50%] mx-auto">
             Hear from cyclists who have experienced our top-quality bikes and
             exceptional customer service.
           </p>
