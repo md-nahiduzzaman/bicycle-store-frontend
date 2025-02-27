@@ -67,15 +67,20 @@ const MainCartPage = () => {
   };
 
   return (
-    <div className="container w-3/6 min-h-screen px-6 mx-auto">
-      <h1 className="mb-4 text-2xl font-semibold text-center">Your Cart</h1>
+    <div className="container w-full min-h-screen px-3 mx-auto md:w-4/5 lg:w-3/6 sm:px-4 md:px-6">
+      <h1 className="mb-4 text-xl font-semibold text-center sm:text-2xl">
+        Your Cart
+      </h1>
 
-      <div className="p-10 bg-white rounded-lg">
+      <div className="p-4 bg-white border rounded-lg sm:p-6 md:p-10">
         {items.length > 0 ? (
           <>
             <ul className="space-y-4">
               {items.map((item: CartItem) => (
-                <li key={item.product} className="flex items-center gap-4">
+                <li
+                  key={item.product}
+                  className="flex flex-col items-start gap-3 pb-3 border-b sm:flex-row sm:items-center sm:gap-4"
+                >
                   <img
                     src={
                       item.imageUrl ||
@@ -88,22 +93,47 @@ const MainCartPage = () => {
                   <div className="flex-1">
                     <h1 className="text-sm font-medium">{item.name}</h1>
 
+                    <div className="flex items-center justify-between mt-2 sm:hidden">
+                      <div className="flex items-center gap-2">
+                        <button
+                          className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
+                          onClick={() =>
+                            handleUpdateQuantity(
+                              item.product,
+                              item.quantity - 1
+                            )
+                          }
+                          disabled={item.quantity <= 1}
+                        >
+                          -
+                        </button>
+                        <span className="text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
+                          onClick={() =>
+                            handleUpdateQuantity(
+                              item.product,
+                              item.quantity + 1
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                      <p className="pl-4 text-sm font-semibold font-number">
+                        ${item.price * item.quantity}
+                      </p>
+                    </div>
+
                     <MdDeleteOutline
-                      className="mt-2 text-xl text-red-600 hover:underline"
+                      className="mt-2 text-xl text-red-600 cursor-pointer hover:text-red-800"
                       onClick={() => handleRemoveItem(item.product)}
                     />
                   </div>
 
-                  <div className="flex items-center gap-2 mt-1 mr-8">
-                    <button
-                      className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
-                      onClick={() =>
-                        handleUpdateQuantity(item.product, item.quantity + 1)
-                      }
-                    >
-                      +
-                    </button>
-                    <span className="text-sm font-medium">{item.quantity}</span>
+                  <div className="items-center hidden gap-2 mt-1 mr-4 sm:flex md:mr-8">
                     <button
                       className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
                       onClick={() =>
@@ -113,33 +143,46 @@ const MainCartPage = () => {
                     >
                       -
                     </button>
+                    <span className="text-sm font-medium">{item.quantity}</span>
+                    <button
+                      className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
+                      onClick={() =>
+                        handleUpdateQuantity(item.product, item.quantity + 1)
+                      }
+                    >
+                      +
+                    </button>
                   </div>
 
-                  <p className="text-sm font-semibold font-number">
+                  <p className="hidden text-sm font-semibold sm:block font-number">
                     ${item.price * item.quantity}
                   </p>
                 </li>
               ))}
             </ul>
             <div className="my-4 border-t"></div>
-            <div className="flex justify-end gap-8">
-              <span className="text-lg font-semibold font-heading">
+            <div className="flex justify-between sm:justify-end sm:gap-8">
+              <span className="text-base font-semibold sm:text-lg font-heading">
                 Total Price
               </span>
-              <span className="text-lg font-bold font-number">
+              <span className="text-base font-bold sm:text-lg font-number">
                 ${totalPrice}
               </span>
             </div>
             <div className="my-4 border-t"></div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-center sm:justify-end">
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button variant="outline" onClick={handlePlaceOrder}>
+                  <Button
+                    variant="outline"
+                    onClick={handlePlaceOrder}
+                    className="w-full sm:w-auto"
+                  >
                     Place Your Order
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] w-[95%] mx-auto">
                   <DialogHeader>
                     <DialogTitle>Payment</DialogTitle>
                     <DialogDescription>
@@ -158,8 +201,15 @@ const MainCartPage = () => {
             </div>
           </>
         ) : (
-          <div className="text-center">
+          <div className="py-8 text-center">
             <p className="text-lg font-medium">Your cart is empty!</p>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => navigate("/products")}
+            >
+              Continue Shopping
+            </Button>
           </div>
         )}
       </div>

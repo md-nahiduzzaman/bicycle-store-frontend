@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,11 +23,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-
 import { Loader2 } from "lucide-react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useUpdatePasswordMutation } from "@/redux/features/auth/auth";
+import { useChangePasswordMutation } from "@/redux/features/auth/auth";
 
 // Validation Schema for password reset
 const passwordResetSchema = z
@@ -49,8 +49,7 @@ const passwordResetSchema = z
 const ProfilePage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
-  console.log(user);
-  const [updatePassword] = useUpdatePasswordMutation();
+  const [changePassword] = useChangePasswordMutation();
 
   // Form handling for password reset
   const form = useForm<z.infer<typeof passwordResetSchema>>({
@@ -65,24 +64,18 @@ const ProfilePage = () => {
   // Handle password reset form submission
   const onSubmit = async (data: z.infer<typeof passwordResetSchema>) => {
     try {
-      await updatePassword({
+      const result = await changePassword({
         oldPassword: data.currentPassword,
         newPassword: data.newPassword,
-      });
-      console.log("Password reset response:", updatePassword);
+      }).unwrap();
+      console.log(result);
       toast.success("Password reset successful!");
       setIsDialogOpen(false);
       form.reset();
     } catch (error: any) {
-      console.error("Password reset error:", error);
-      if (error.response) {
-        toast.error(
-          error.response.data.error ||
-            "Failed to reset password. Please try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      toast.error(
+        error.message || "Failed to reset password. Please try again."
+      );
     }
   };
 

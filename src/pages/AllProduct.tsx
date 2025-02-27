@@ -31,7 +31,7 @@ const AllProducts = () => {
       <h1 className="mb-6 text-4xl font-semibold text-center">All Bicycles</h1>
 
       {/* Search & Filters */}
-      <div className="container flex flex-wrap items-center gap-4 mx-auto mb-8">
+      <div className="container flex flex-wrap items-center gap-4 px-4 mx-auto mb-8">
         <Input
           placeholder="Search..."
           value={searchTerm}
