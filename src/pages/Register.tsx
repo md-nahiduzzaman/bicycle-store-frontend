@@ -136,7 +136,7 @@ const Register = () => {
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="Your password"
+                          placeholder="Your password (123456)"
                           {...field}
                         />
                       </FormControl>
